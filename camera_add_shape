@@ -1,0 +1,46 @@
+import cv2
+import numpy as np
+import time
+
+def contrast(r):
+    if (r<150):
+        l=r+150
+    else:
+        l=r-150
+
+    return (l)
+
+cap =cv2.VideoCapture(0)
+while (cap.isOpened()):
+    ret,img =cap.read()
+    img2 =cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    cv2.imshow('grayscale',img2)
+
+    b=contrast(img[200,200,0])
+    g=contrast(img[200,200,1])
+    r=contrast(img[200,200,2])
+    
+    print b
+    print g
+    print r
+    print "\n"
+    l=contrast(img[20,500,0])
+    m=contrast(img[20,500,1])
+    n=contrast(img[20,500,2])
+    
+    cv2.circle(img,(200,200),24,(b,g,r),-1)
+    #cv2.circle(img,(400,200),12,(l,m,n),-1)
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    cv2.putText(img,"I.E MechT",(0,400), font, 3,(l,m,n),2)
+    cv2.namedWindow('output', flags= cv2.WINDOW_NORMAL)
+    cv2.imshow('output',img)
+    k=cv2.waitKey(10)
+    #time.sleep(1)
+
+    if k== 27:
+        break
+
+
+cap.release()
+cv2.destroyAllWindows()
+
